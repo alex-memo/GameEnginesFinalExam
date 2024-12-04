@@ -14,13 +14,8 @@ public class CameraLaser : MonoBehaviour
 	private void shootLaser()
 	{
 		Ray _ray = new(cam.position, cam.forward);
-		if (Physics.Raycast(_ray, out RaycastHit _hit, 100))
-		{
-			Debug.Log("Hit: " + _hit.transform.name);
-		}
-		else
-		{
-			Debug.Log("Miss");
-		}
+		if (!Physics.Raycast(_ray, out RaycastHit _hit, 100)) { return; }
+		if (!_hit.collider.TryGetComponent<Duck>(out var _duck)) { return; }
+		_duck.Die();
 	}
 }
