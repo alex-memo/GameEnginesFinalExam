@@ -7,7 +7,8 @@ public class GameManager : InstanceFactory<GameManager>
 	[SerializeField] private Vector2 xPositions = new();
 	[SerializeField] private Vector2 yBoundsRange = new(-3.5f, 3.5f);
 	[SerializeField] private float zPosition = 0;
-	private float spawnRate = .4f;
+	private float spawnRate = 1.5f;
+	private const float lowerBoundSpawnRate = 0.5f;
 	private void Start()
 	{
 		StartCoroutine(gameLoop());
@@ -29,7 +30,8 @@ public class GameManager : InstanceFactory<GameManager>
 	private void onDuckKilled()
 	{
 		Duck.Speed += .2f;
-		spawnRate += .1f;
+		spawnRate -= .1f;
+		if (spawnRate < lowerBoundSpawnRate) { spawnRate = lowerBoundSpawnRate; }
 	}
 	public Vector3 GetSpawnPos(out Quaternion _rotation)
 	{
