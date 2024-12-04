@@ -7,11 +7,11 @@ public class GameManager : InstanceFactory<GameManager>
 	[SerializeField] private Vector2 xPositions = new();
 	[SerializeField] private Vector2 yBoundsRange = new(-3.5f, 3.5f);
 	[SerializeField] private float zPosition = 0;
-	private float spawnRate = 1;
+	private float spawnRate = .4f;
 	private void Start()
 	{
-		//StartCoroutine(gameLoop());
-		DuckPool.Instance.GetDuck();
+		StartCoroutine(gameLoop());
+		OnDuckKilled += onDuckKilled;
 	}
 	protected override void OnDestroy()
 	{
@@ -25,6 +25,11 @@ public class GameManager : InstanceFactory<GameManager>
 			yield return new WaitForSeconds(spawnRate);
 			DuckPool.Instance.GetDuck();
 		}
+	}
+	private void onDuckKilled()
+	{
+		Duck.Speed += .2f;
+		spawnRate += .1f;
 	}
 	public Vector3 GetSpawnPos(out Quaternion _rotation)
 	{

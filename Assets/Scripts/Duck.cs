@@ -3,7 +3,7 @@ using UnityEngine;
 public class Duck : MonoBehaviour
 {
 	public static float Speed = 7;
-	public static float lifeTime = 5;
+	public static float Lifetime = 5;
 	private Rigidbody rb;
 	private void Awake()
 	{
@@ -12,7 +12,7 @@ public class Duck : MonoBehaviour
 	private void OnEnable()
 	{
 		rb.linearVelocity = transform.forward * Speed;
-		Invoke(nameof(Disable), lifeTime);
+		Invoke(nameof(Disable), Lifetime);
 	}
 	private void Disable()
 	{
